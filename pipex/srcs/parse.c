@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 21:40:22 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/07/13 17:32:38 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/07/14 16:24:54 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	parse_infile(t_cmd *cmd)
 {
 	char	*temp;
 	char	buf;
-	int		fd;
 	int		ret;
 
 	if ((cmd->fd[0] = open(cmd->infile, O_RDONLY)) < 0)
@@ -102,21 +101,27 @@ void	parse_file(t_cmd *cmd, int argc, char **argv)
 		exit_msg("write");
 	if ((cmd->fd[1] = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
 		exit_msg("open");
+	//cmd->fd[1] = dup2(cmd->fd[0], STDIN_FILENO);
+	//cmd->fd[0] = dup2(cmd->fd[1], STDOUT_FILENO);
 }
 
 void	exe_cmd(t_cmd *cmd)
 {
 	pid_t	pid;
-	int		state;
-	int		i;
 	
-	state = pipe(cmd->fd);
-	if (state == -1)
+	if (pipe(cmd->fd) == -1)
 		exit_msg("pipe");
-	i = 0;
-	while (cmd->cmd[i])
+	pid = fork();
+	if (pid == -1)
+		exit_msg("fork");
+	else if (pid == 0)
 	{
-		execve(cmd->path[i], cmd->cmd[i], 0);
-		i++;
+		dup2(cmd->fd[0], STDIN_FILENO);
+		execve(cmd->path[1], cmd->cmd[1], 0);
+	}
+	else
+	{
+		dup2(cmd->fd[1], STDOUT_FILENO);
+		execve(cmd->path[0], cmd->cmd[0], 0);
 	}
 }
