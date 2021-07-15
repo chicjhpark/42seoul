@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 21:31:20 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/07/11 21:35:06 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/07/15 21:00:36 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_strncpy(char *s1, char *s2, int n)
 	s1[i] = '\0';
 }
 
-int		find_path_idx(char **envp, char *name)
+int	find_path_idx(char **envp, char *name)
 {
 	int		i;
 	int		j;

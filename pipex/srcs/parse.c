@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 21:40:22 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/07/15 20:37:52 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/07/15 21:01:54 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	parse_path(t_cmd *cmd, char **envp)
 		j = -1;
 		while (temp[++j])
 		{
-			if ((path = ft_strcat(temp[j], cmd->cmd[i][0])) == NULL)
+			path = ft_strcat(temp[j], cmd->cmd[i][0]);
+			if (path == NULL)
 				exit_msg("malloc");
 			if (access(path, F_OK) == 0)
 				cmd->path[++k] = path;
@@ -67,7 +68,8 @@ void	parse_infile(t_cmd *cmd)
 	char	buf;
 	int		ret;
 
-	if ((cmd->fd[0] = open(cmd->infile, O_RDONLY)) < 0)
+	cmd->fd[0] = open(cmd->infile, O_RDONLY);
+	if (cmd->fd[0] < 0)
 		exit_msg("open");
 	cmd->data = NULL;
 	while ((ret = read(cmd->fd[0], &buf, 1)) > 0)
