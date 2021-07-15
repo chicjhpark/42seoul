@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 21:40:22 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/07/14 16:24:54 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/07/15 20:37:52 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,13 @@ void	exe_cmd(t_cmd *cmd)
 		exit_msg("fork");
 	else if (pid == 0)
 	{
-		dup2(cmd->fd[0], STDIN_FILENO);
+		dup2(STDIN_FILENO, STDOUT_FILENO);
 		execve(cmd->path[1], cmd->cmd[1], 0);
 	}
 	else
 	{
-		dup2(cmd->fd[1], STDOUT_FILENO);
+		dup2(cmd->fd[0], STDIN_FILENO);
+		write(0, cmd->data, ft_strlen(cmd->data));
 		execve(cmd->path[0], cmd->cmd[0], 0);
 	}
 }
