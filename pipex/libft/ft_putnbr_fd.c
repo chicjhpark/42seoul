@@ -35,7 +35,7 @@ static void	ft_compt(int n, int fd)
 	write(fd, &temp, 1);
 }
 
-void		ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
 	if (n < 0)
 		write(fd, "-", 1);

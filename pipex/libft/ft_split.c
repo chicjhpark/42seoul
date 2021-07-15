@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static int		ft_str_count(char const *s, char c)
+static int	ft_str_count(char const *s, char c)
 {
 	int	i;
 	int	count;
@@ -33,7 +33,7 @@ static int		ft_str_count(char const *s, char c)
 	return (count);
 }
 
-static void		*ft_free(char **s2, int j)
+static void	*ft_free(char **s2, int j)
 {
 	int	i;
 
@@ -47,7 +47,7 @@ static void		*ft_free(char **s2, int j)
 	return (NULL);
 }
 
-static char		**ft_chr_count(char **s2, char const *s, char c)
+static char	**ft_chr_count(char **s2, char const *s, char c)
 {
 	int	i;
 	int	j;
@@ -68,14 +68,15 @@ static char		**ft_chr_count(char **s2, char const *s, char c)
 				count++;
 				i++;
 			}
-			if (!(s2[j] = (char *)malloc(sizeof(char) * (count + 1))))
+			s2[j] = (char *)malloc(sizeof(char) * (count + 1));
+			if (!s2[j])
 				return (ft_free(s2, j - 1));
 		}
 	}
 	return (s2);
 }
 
-static void		ft_strcpy(char **s2, char const *s, char c)
+static void	ft_strcpy(char **s2, char const *s, char c)
 {
 	int	i;
 	int	j;
@@ -102,7 +103,7 @@ static void		ft_strcpy(char **s2, char const *s, char c)
 	}
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**s2;
 	int		count;
@@ -110,7 +111,8 @@ char			**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	count = ft_str_count(s, c);
-	if (!(s2 = (char **)malloc(sizeof(char *) * (count + 1))))
+	s2 = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!s2)
 		return (NULL);
 	if (ft_chr_count(s2, s, c) == NULL)
 		return (NULL);
