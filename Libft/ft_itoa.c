@@ -21,11 +21,13 @@ static char	*ft_convert(int n, char *str, size_t count)
 	}
 	str[count] = '\0';
 	if (n < 0)
+	{
 		while (--count)
 		{
-			str[count] = ((n % 10) * -1) + '0';
+			str[count] = ((n % -10) * -1) + '0';
 			n = n / 10;
 		}
+	}
 	else
 	{
 		while (count--)
@@ -37,7 +39,7 @@ static char	*ft_convert(int n, char *str, size_t count)
 	return (str);
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char	*str;
 	int		temp;
@@ -58,7 +60,8 @@ char		*ft_itoa(int n)
 		temp = temp / 10;
 		count++;
 	}
-	if (!(str = (char *)malloc(sizeof(char) * (sign + count + 1))))
+	str = (char *)malloc(sizeof(char) * (sign + count + 1));
+	if (!str)
 		return (NULL);
 	str = ft_convert(n, str, count);
 	return (str);
