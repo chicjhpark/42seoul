@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 21:40:22 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/07/15 21:01:54 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/07/15 21:03:36 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void	parse_file(t_cmd *cmd, int argc, char **argv)
 	parse_infile(cmd);
 	if (access(cmd->outfile, F_OK) == 0 && access(cmd->outfile, W_OK) < 0)
 		exit_msg("write");
-	if ((cmd->fd[1] = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
+	cmd->fd[1] = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (cmd->fd[1] < 0)
 		exit_msg("open");
 	//cmd->fd[1] = dup2(cmd->fd[0], STDIN_FILENO);
 	//cmd->fd[0] = dup2(cmd->fd[1], STDOUT_FILENO);
