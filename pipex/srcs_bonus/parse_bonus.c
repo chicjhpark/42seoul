@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parse_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 21:40:22 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/08/02 17:33:03 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/08/09 18:31:02 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	parse_cmd(t_cmd *cmd, int argc, char **argv)
 {
@@ -29,6 +29,7 @@ void	parse_cmd(t_cmd *cmd, int argc, char **argv)
 			exit_msg("malloc");
 		i++;
 	}
+	cmd->num = i - 1;
 	cmd->cmd[i] = NULL;
 }
 
@@ -101,36 +102,7 @@ void	parse_file(t_cmd *cmd, int argc, char **argv)
 	parse_infile(cmd);
 	if (access(cmd->outfile, F_OK) == 0 && access(cmd->outfile, W_OK) < 0)
 		exit_msg("write");
-	cmd->fd[1] = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	cmd->fd[1] = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (cmd->fd[1] < 0)
 		exit_msg("open");
-}
-
-void	exe_cmd(t_cmd *cmd)
-{
-	pid_t	pid;
-	int		fd[2];
-
-	if (pipe(fd) == -1)
-		exit_msg("pipe");
-	pid = fork();
-	if (pid == -1)
-		exit_msg("fork");
-	else if (pid == 0)
-	{
-		close(fd[0]);
-		dup2(fd[1], 1);
-		close(fd[1]);
-		dup2(cmd->fd[0], 0);
-		execve(cmd->path[0], cmd->cmd[0], 0);
-	}
-	else
-	{
-		wait(0);
-		close(fd[1]);
-		dup2(fd[0], 0);
-		close(fd[0]);
-		dup2(cmd->fd[1], 1);
-		execve(cmd->path[1], cmd->cmd[1], 0);
-	}
 }
