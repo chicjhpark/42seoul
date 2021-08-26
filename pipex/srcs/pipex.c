@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 20:20:45 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/08/26 22:45:29 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/08/26 23:01:02 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	child_process(char **argv, char **envp, int *fd)
 {
-	int	infile;
+	int		infile;
 	char	**temp;
 	char	*cmd[3];
 
@@ -36,7 +36,7 @@ void	child_process(char **argv, char **envp, int *fd)
 
 void	parent_process(char **argv, char **envp, int *fd)
 {
-	int	outfile;
+	int		outfile;
 	char	**temp;
 	char	*cmd[3];
 
