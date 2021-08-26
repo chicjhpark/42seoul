@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 20:32:32 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/08/26 22:45:36 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/08/26 23:00:07 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*find_path(char **envp, char *cmd)
 	char	**paths;
 	char	*path;
 	char	*temp;
-	int	i;
+	int		i;
 
 	i = 0;
 	while (ft_strnstr(envp[i], "PATH=", 5) == NULL)
