@@ -5,57 +5,78 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/29 09:13:08 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/08/02 17:31:26 by jaehpark         ###   ########.fr       */
+/*   Created: 2021/08/26 20:20:45 by jaehpark          #+#    #+#             */
+/*   Updated: 2021/08/26 22:45:29 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	debug(t_cmd *cmd)
+void	child_process(char **argv, char **envp, int *fd)
 {
-	int		i;
-	int		j;
+	int	infile;
+	char	**temp;
+	char	*cmd[3];
 
-	printf("infile : %s\n", cmd->infile);
-	printf("outfile : %s\n", cmd->outfile);
-	i = 0;
-	while (cmd->cmd[i])
-	{
-		printf("cmd %d : ", i);
-		j = 0;
-		while (cmd->cmd[i][j])
-		{
-			printf("%s ", cmd->cmd[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-	printf("-------------------------------------\n");
-	printf("%s\n", cmd->data);
-	printf("-------------------------------------\n");
-	i = 0;
-	while (cmd->path[i])
-	{
-		printf("path : %s\n", cmd->path[i]);
-		i++;
-	}
+	if (access(argv[1], F_OK | R_OK) == -1)
+		error_msg("exist or read");
+	infile = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		error_msg("open");
+	dup2(fd[1], STDOUT_FILENO);
+	dup2(infile, STDIN_FILENO);
+	close(fd[0]);
+	temp = ft_split(argv[2], ' ');
+	cmd[0] = find_path(envp, temp[0]);
+	cmd[1] = temp[1];
+	cmd[2] = NULL;
+	if (execve(cmd[0], cmd, 0) == -1)
+		error_msg("exe");
+}
+
+void	parent_process(char **argv, char **envp, int *fd)
+{
+	int	outfile;
+	char	**temp;
+	char	*cmd[3];
+
+	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (outfile < 0)
+		error_msg("open");
+	dup2(fd[0], STDIN_FILENO);
+	dup2(outfile, STDOUT_FILENO);
+	close(fd[1]);
+	temp = ft_split(argv[3], ' ');
+	cmd[0] = find_path(envp, temp[0]);
+	cmd[1] = temp[1];
+	cmd[2] = NULL;
+	if (execve(cmd[0], cmd, 0) == -1)
+		error_msg("exe");
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_cmd	cmd;
-
+	int	fd[2];
+	int	pid;
+	
 	if (argc == 5)
 	{
-		ft_memset(&cmd, 0, sizeof(cmd));
-		parse_file(&cmd, argc, argv);
-		parse_cmd(&cmd, argc, argv);
-		parse_path(&cmd, envp);
-		exe_cmd(&cmd);
+		if (pipe(fd) == -1)
+			error_msg("pipe");
+		pid = fork();
+		if (pid == 0)
+			child_process(argv, envp, fd);
+		else if (pid > 0)
+		{
+			wait(0);
+			parent_process(argv, envp, fd);
+			close(fd[0]);
+			close(fd[1]);
+		}
+		else
+			error_msg("fork");
 	}
 	else
-		exit_msg("Invalid format");
+		error_msg("Invalid argument.");
 	return (0);
 }

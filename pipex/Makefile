@@ -6,7 +6,7 @@
 #    By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/01 12:10:53 by jaehpark          #+#    #+#              #
-#    Updated: 2021/08/09 17:51:14 by jaehpark         ###   ########.fr        #
+#    Updated: 2021/08/26 22:06:55 by jaehpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,13 @@ NAME_B			= pipex_bonus
 
 CC				= gcc
 CFLAGS			= -g3 -fsanitize=address -Wall -Wextra -Werror
-#CFLAGS			= -g -Wall -Wextra -Werror
+#CFLAGS			= -Wall -Wextra -Werror
 
 INCS			= -Ilibft -I.
 
 SRCS_DIR		= srcs
 SRCS_NAME		= pipex.c \
-					utils.c \
-					parse.c
+					utils.c
 
 SRCS			= $(addprefix $(SRCS_DIR)/, $(SRCS_NAME))
 
@@ -70,7 +69,7 @@ clean			:
 
 fclean			:
 					$(MAKE) -C $(LIB_DIR) fclean
-					rm -rf $(NAME) $(OBJS_DIR) $(OBJS_B_DIR)
+					rm -rf $(NAME) $(NAME_B) $(OBJS_DIR) $(OBJS_B_DIR)
 
 bonus			: $(NAME_B)
 
