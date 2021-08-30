@@ -49,9 +49,9 @@ void	parent_process(char **argv, char **envp, int *fd)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	fd[2];
-	pid_t pid;
-	
+	int		fd[2];
+	pid_t	pid;
+
 	if (argc == 5)
 	{
 		if (pipe(fd) == -1)
