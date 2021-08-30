@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 20:20:45 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/08/30 10:36:01 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/08/30 12:07:26 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	child_process(char **argv, char **envp, int *fd)
 	if (access(argv[1], F_OK | R_OK) == -1)
 		error_msg("exist or read");
 	infile = open(argv[1], O_RDONLY);
-	if (fd < 0)
+	if (infile < 0)
 		error_msg("open");
 	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
