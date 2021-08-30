@@ -6,7 +6,7 @@
 #    By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/01 12:10:53 by jaehpark          #+#    #+#              #
-#    Updated: 2021/08/26 22:06:55 by jaehpark         ###   ########.fr        #
+#    Updated: 2021/08/30 09:42:32 by jaehpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,7 @@ SRCS			= $(addprefix $(SRCS_DIR)/, $(SRCS_NAME))
 
 SRCS_B_DIR		= srcs_bonus
 SRCS_B_NAME		= pipex_bonus.c \
-					utils_bonus.c \
-					parse_bonus.c
+					utils_bonus.c
 
 SRCS_B			= $(addprefix $(SRCS_B_DIR)/, $(SRCS_B_NAME))
 

@@ -1,9 +1,1 @@
-total 144
--rw-r--r--   1 jhpark  staff   2317 Aug 26 22:06 Makefile
--rw-r--r--   1 jhpark  staff     20 Aug 26 22:15 infile
-drwxr-xr-x  91 jhpark  staff   2912 Aug 26 22:42 libft
-drwxr-xr-x   4 jhpark  staff    128 Aug 26 22:42 objs
--rw-r--r--   1 jhpark  staff      9 Aug 26 22:44 outfile
--rwxr-xr-x   1 jhpark  staff  54168 Aug 26 22:42 pipex
--rw-r--r--   1 jhpark  staff   1001 Aug 26 22:17 pipex.h
-drwxr-xr-x   4 jhpark  staff    128 Aug 26 22:15 srcs
+      13
