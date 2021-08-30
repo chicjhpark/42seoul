@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 20:20:45 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/08/30 12:07:26 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/08/30 13:02:16 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	child_process(char **argv, char **envp, int *fd)
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(infile, STDIN_FILENO);
 	cmd = ft_split(argv[2], ' ');
-	if (execve(find_path(envp, cmd[0]), cmd, 0) == -1)
+	if (execve(find_path(envp, cmd[0]), cmd, envp) == -1)
 		error_msg("exe");
 }
 
@@ -35,7 +35,6 @@ void	parent_process(char **argv, char **envp, int *fd)
 	int		outfile;
 	char	**cmd;
 
-	wait(0);
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile < 0)
 		error_msg("open");
@@ -43,7 +42,7 @@ void	parent_process(char **argv, char **envp, int *fd)
 	dup2(fd[0], STDIN_FILENO);
 	dup2(outfile, STDOUT_FILENO);
 	cmd = ft_split(argv[3], ' ');
-	if (execve(find_path(envp, cmd[0]), cmd, 0) == -1)
+	if (execve(find_path(envp, cmd[0]), cmd, envp) == -1)
 		error_msg("exe");
 }
 
@@ -60,7 +59,10 @@ int	main(int argc, char **argv, char **envp)
 		if (pid == 0)
 			child_process(argv, envp, fd);
 		else if (pid > 0)
+		{
+			waitpid(pid, 0, WNOHANG);
 			parent_process(argv, envp, fd);
+		}
 		else
 			error_msg("fork");
 		close(fd[0]);
