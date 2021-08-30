@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 09:44:18 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/08/30 10:48:05 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/08/30 10:56:05 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exe_cmd(char *argv, char **envp)
 {
-	int	fd[2];
+	int		fd[2];
 	pid_t	pid;
 	char	**cmd;
 
@@ -36,16 +36,16 @@ void	exe_cmd(char *argv, char **envp)
 		close(fd[1]);
 	}
 	else
-		error_msg("fork");	
+		error_msg("fork");
 }
 
 int	parse_file(int argc, char **argv)
 {
 	int	infile;
 	int	outfile;
-	
+
 	if (access(argv[1], F_OK | R_OK) == -1)
-			error_msg("exist or read");
+		error_msg("exist or read");
 	infile = open(argv[1], O_RDONLY);
 	dup2(infile, STDIN_FILENO);
 	outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -56,8 +56,8 @@ int	parse_file(int argc, char **argv)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	i;
-	int	outfile;
+	int		i;
+	int		outfile;
 	char	**cmd;
 
 	if (argc >= 5)
