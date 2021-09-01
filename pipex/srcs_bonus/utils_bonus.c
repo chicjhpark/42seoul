@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 09:43:49 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/08/30 10:56:09 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/09/02 05:57:34 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,57 @@ char	*find_path(char **envp, char *cmd)
 		i++;
 	}
 	return (NULL);
+}
+
+/*int	get_next_line(char **line)
+{
+	char	buf;
+	int		ret;
+	char	*temp;
+
+	*line = (char *)malloc(1);
+	if (*line == NULL)
+		return (-1);
+	(*line)[0] = 0;
+	while ((ret = read(0, &buf, 1)) > 0)
+	{
+		if (buf == '\n')
+			return (1);
+		temp = *line;
+		*line = ft_strjoin(*line, &buf);
+		free(temp);
+		if (*line == 0)
+			return (-1);
+	}
+	if (ret == -1)
+		return (-1);
+	else
+		return (0);
+}*/
+
+int	get_next_line(char **line)
+{
+	char	*buffer;
+	int		i;
+	int		r;
+	char	c;
+
+	i = 0;
+	r = 0;
+	buffer = (char *)malloc(10000);
+	if (!buffer)
+		return (-1);
+	r = read(0, &c, 1);
+	while (r && c != '\n' && c != '\0')
+	{
+		if (c != '\n' && c != '\0')
+			buffer[i] = c;
+		i++;
+		r = read(0, &c, 1);
+	}
+	buffer[i] = '\n';
+	buffer[++i] = '\0';
+	*line = buffer;
+	//free(buffer);
+	return (r);
 }

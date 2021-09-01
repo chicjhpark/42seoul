@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 20:20:45 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/08/30 23:11:05 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/09/02 07:10:21 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,7 @@ int	main(int argc, char **argv, char **envp)
 		if (execve(find_path(envp, cmd[0]), cmd, envp) == -1)
 			error_msg("exe");
 	}
+	else
+		error_msg("Invalid format.");
+	return (0);
 }

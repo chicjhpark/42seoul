@@ -6,7 +6,7 @@
 #    By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/01 12:10:53 by jaehpark          #+#    #+#              #
-#    Updated: 2021/08/30 10:50:23 by jaehpark         ###   ########.fr        #
+#    Updated: 2021/09/01 23:26:06 by jaehpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			= pipex
 NAME_B			= pipex_bonus
 
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			= -g3 -fsanitize=address -Wall -Wextra -Werror
 
 INCS			= -Ilibft -I.
 
