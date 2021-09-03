@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 09:43:49 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/09/02 05:57:34 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/09/03 09:05:24 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,32 @@ char	*find_path(char **envp, char *cmd)
 	return (NULL);
 }
 
-/*int	get_next_line(char **line)
+char *sum(char *line, char buf)
+{
+    int size;
+    char *str;
+    int i;
+
+    size = ft_strlen(line);
+    str = (char *)malloc(sizeof(char) * (size + 2));
+    if (!str)
+        return (NULL);
+	i = 0;
+    while (line[i] != 0)
+    {
+        str[i] = line[i];
+        i++;
+    }
+	free(line);
+    str[i++] = buf;
+    str[i] = '\0';
+    return (str);
+}
+
+int	get_next_line(char **line)
 {
 	char	buf;
 	int		ret;
-	char	*temp;
 
 	*line = (char *)malloc(1);
 	if (*line == NULL)
@@ -61,41 +82,9 @@ char	*find_path(char **envp, char *cmd)
 	{
 		if (buf == '\n')
 			return (1);
-		temp = *line;
-		*line = ft_strjoin(*line, &buf);
-		free(temp);
+		*line = sum(*line, buf);
 		if (*line == 0)
 			return (-1);
 	}
-	if (ret == -1)
-		return (-1);
-	else
-		return (0);
-}*/
-
-int	get_next_line(char **line)
-{
-	char	*buffer;
-	int		i;
-	int		r;
-	char	c;
-
-	i = 0;
-	r = 0;
-	buffer = (char *)malloc(10000);
-	if (!buffer)
-		return (-1);
-	r = read(0, &c, 1);
-	while (r && c != '\n' && c != '\0')
-	{
-		if (c != '\n' && c != '\0')
-			buffer[i] = c;
-		i++;
-		r = read(0, &c, 1);
-	}
-	buffer[i] = '\n';
-	buffer[++i] = '\0';
-	*line = buffer;
-	//free(buffer);
-	return (r);
+	return (0);
 }

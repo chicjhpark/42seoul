@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 09:44:18 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/09/02 06:04:23 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/09/03 09:05:00 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ void	exe_cmd(char *argv, char **envp)
 		error_msg("fork");
 }
 
+void	print_line(char *line, char *limiter, int fd)
+{
+	if (ft_strncmp(line, limiter, ft_strlen(line)) == 0)
+		exit(0);
+	write(fd, line, ft_strlen(line));
+	write(fd, "\n", 1);
+}
+
 void	here_doc(int argc, char *limiter)
 {
 	int		fd[2];
@@ -74,11 +82,7 @@ void	here_doc(int argc, char *limiter)
 	{
 		close(fd[0]);
 		while (get_next_line(&line))
-		{
-			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
-				exit(0);
-			write(fd[1], line, ft_strlen(line));
-		}
+			print_line(line, limiter, fd[1]);
 	}
 	else if (pid > 0)
 	{
@@ -86,6 +90,8 @@ void	here_doc(int argc, char *limiter)
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 	}
+	else
+		error_msg("fork");
 }
 
 int	main(int argc, char **argv, char **envp)
