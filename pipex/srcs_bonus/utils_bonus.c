@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 09:43:49 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/09/03 09:13:21 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/09/03 09:25:33 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,13 @@ int	get_next_line(char **line)
 	if (*line == NULL)
 		return (-1);
 	(*line)[0] = 0;
+	ret = read(0, &buf, 1);
 	while (buf != '\n' && buf != '\0')
 	{
-		ret = read(0, &buf, 1);
 		*line = sum(*line, buf);
 		if (*line == 0)
 			return (-1);
+		ret = read(0, &buf, 1);
 	}
 	if (buf == '\n')
 		return (1);
