@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 09:43:49 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/09/03 09:05:24 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/09/03 09:12:41 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,26 @@ char	*find_path(char **envp, char *cmd)
 	return (NULL);
 }
 
-char *sum(char *line, char buf)
+char	*sum(char *line, char buf)
 {
-    int size;
-    char *str;
-    int i;
+	int		size;
+	char	*str;
+	int		i;
 
-    size = ft_strlen(line);
-    str = (char *)malloc(sizeof(char) * (size + 2));
-    if (!str)
-        return (NULL);
+	size = ft_strlen(line);
+	str = (char *)malloc(sizeof(char) * (size + 2));
+	if (!str)
+		return (NULL);
 	i = 0;
-    while (line[i] != 0)
-    {
-        str[i] = line[i];
-        i++;
+	while (line[i] != 0)
+	{
+		str[i] = line[i];
+		i++;
     }
 	free(line);
-    str[i++] = buf;
-    str[i] = '\0';
-    return (str);
+	str[i++] = buf;
+	str[i] = '\0';
+	return (str);
 }
 
 int	get_next_line(char **line)
