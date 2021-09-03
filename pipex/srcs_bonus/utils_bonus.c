@@ -6,7 +6,7 @@
 /*   By: jaehpark <jaehpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 09:43:49 by jaehpark          #+#    #+#             */
-/*   Updated: 2021/09/03 09:12:41 by jaehpark         ###   ########.fr       */
+/*   Updated: 2021/09/03 09:13:21 by jaehpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*sum(char *line, char buf)
 	{
 		str[i] = line[i];
 		i++;
-    }
+	}
 	free(line);
 	str[i++] = buf;
 	str[i] = '\0';
