@@ -78,13 +78,14 @@ int	get_next_line(char **line)
 	if (*line == NULL)
 		return (-1);
 	(*line)[0] = 0;
-	while ((ret = read(0, &buf, 1)) > 0)
+	while (buf != '\n' && buf != '\0')
 	{
-		if (buf == '\n')
-			return (1);
+		ret = read(0, &buf, 1);
 		*line = sum(*line, buf);
 		if (*line == 0)
 			return (-1);
 	}
+	if (buf == '\n')
+		return (1);
 	return (0);
 }
